@@ -13,7 +13,10 @@ var res = {
     CheckBoxNormalClicked_png : "res/check_box_normal_press.png",
     CheckBoxNormalDisabled_png : "res/check_box_normal_disable.png",
     LabelAtlas_png: "res/labelatlas.png",
-    LoadingBar_png: "res/sliderProgress.png"
+    LoadingBar_png: "res/sliderProgress.png",
+    SliderProgress_png: "res/sliderProgress.png",
+    SliderThumb_png: "res/sliderThumb.png",
+    SliderTrack_png: "res/sliderTrack.png",
 };
 
 var g_resources = [];

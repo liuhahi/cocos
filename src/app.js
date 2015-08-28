@@ -145,10 +145,87 @@ var HelloWorldLayer = cc.Layer.extend({
         //
         // this.addChild(richText);
 
-        var scrollView = new ccui.ScrollView();
-        scrollView.setDirection(ccui)
+        // var scrollView = new ccui.ScrollView();
+        // scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+        // scrollView.setTouchEnabled(true);
+        // scrollView.setBounceEnabled(true);
+        // scrollView.setBackGroundImage(res.HelloWorld_png);
+        // scrollView.setContentSize(cc.size(300,200));
+        // scrollView.setInnerContainerSize(cc.size(1280,2500));
+        // scrollView.setAnchorPoint(cc.p(0.5,0.5));
+        // scrollView.setPosition(cc.p(size.width/2,size.height/2));
+        // this.addChild(scrollView);
+        // for(var i = 0;i<50;i++)
+        // {
+        //   var button = new ccui.Button();
+        //   button.setTouchEnabled();
+        //   button.setPosition(cc.p(scrollView.width/2,i*50));
+        //   button.loadTextures(res.CloseNormal_png,res.CloseSelected_png);
+        //   scrollView.addChild(button);
+        // }
+
+        // var slider = new ccui.Slider();
+        // slider.setTouchEnabled(true);
+        // slider.loadBarTexture(res.SliderTrack_png);
+        // slider.loadSlidBallTextures(res.SliderThumb_png,res.SliderThumb_png,"");
+        // slider.loadProgressBarTexture(res.SliderProgress_png);
+        // slider.x = size.width/2;
+        // slider.y = size.height/2;
+        // slider.addEventListener(this.sliderEvent,this);
+        // this.addChild(slider);
+
+        // textField = new ccui.TextField();
+        // textField.setTouchEnabled(true);
+        // textField.fontName = "Marker Felt";
+        // textField.placeHolder = "Input text here";
+        // textField.fontSize = 30;
+        // textField.x = size.width/2;
+        // textField.y = size.height/2;
+        // textField.addEventListener(this.textFieldEvent,this);
+        //
+        // textField.setMaxLengthEnabled(true);
+        // textField.setMaxLength(12);
+        //
+        // textField.setPasswordEnabled(true);
+        // textField.setPasswordStyleText("*");
+        //
+        // this.addChild(textField);
+
+        var layout = new ccui.Layout();
+        layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
+        layout.sizeType = ccui.Widget.SIZE_PERCENT;
+        layout.setSizePercent(cc.p(0.5,0.5));
+        layout.setPositionPercent(cc.p(0.25,0.25));
+        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+        layout.setBackGroundColor(cc.color.GRAY);
+
+        var text = new ccui.Text();
+        text.attr({
+          textAlign: cc.TEXT_ALIGNMENT_CENTER,
+          string: "Label TTF",
+          font: "Arial"
+        })
+
+        var button = new ccui.Button();
+        button.loadTextures(res.CloseNormal_png,res.CloseSelected_png);
+
+        layout.addChild(text);
+        layout.addChild(button);
+
+        this.addChild(layout);
 
         return true;
+    },
+    sliderEvent:function(sender,type)
+    {
+      switch (type) {
+        case ccui.Slider.EVENT_PERCENT_CHANGED:
+            cc.log("Percent" + sender.getPercent().toFixed(0));
+
+          break;
+        default:
+
+      }
     },
     selectedStateEvent:function(sender , type)
     {
