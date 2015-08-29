@@ -334,11 +334,11 @@ var AnimationLayer = cc.Layer.extend({
           var frame = cc.spriteFrameCache.getSpriteFrame(str);
           animFrames.push(frame);
       }
-      var animation = cc.Animation.create(animFrames, 0.1);
+      var animation = cc.Animation.create(animFrames, 0.5);
 
       // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
       this.sprite.runAction(w_action);
-      var runningAction = new cc.Repeat(cc.Animate.create(animation),1);
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),0.5);
       this.sprite.runAction(runningAction);
     },
     jump:function()
@@ -348,19 +348,20 @@ var AnimationLayer = cc.Layer.extend({
 
       // init runningAction
       var animFrames = [];
-      for (var i = 1; i > 0; i--) {
-          var str = "p_walk" + i + ".png";
-          var frame = cc.spriteFrameCache.getSpriteFrame(str);
-          animFrames.push(frame);
-      }
-      var animation = cc.Animation.create(animFrames, 0.5);
 
-      var jumpUpAction = new cc.MoveBy(1,cc.p(0,50));
-      jumpUpAction.easing(cc.easeExponentialOut(50));
-      this.sprite.runAction(jumpUpAction);
-      var jumpDownAction = new cc.MoveBy(1,cc.p(0,-50));
-      jumpDownAction.easing(cc.easeExponentialIn(50));
-      this.sprite.runAction(jumpDownAction);
+      animFrames.push(cc.spriteFrameCache.getSpriteFrame("p_walk2.png"));
+
+      var animation = cc.Animation.create(animFrames, 0.5);
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),1);
+      this.sprite.runAction(runningAction);
+      // var jumpUpAction = new cc.MoveBy(1,cc.p(0,50));
+      // jumpUpAction.easing(cc.easeOut(50));
+      // this.sprite.runAction(jumpUpAction);
+      // var jumpDownAction = new cc.MoveBy(1,cc.p(0,-50));
+      // jumpDownAction.easing(cc.easeIn(50));
+      // this.sprite.runAction(jumpDownAction);
+      var actionBy = new cc.JumpBy(0.5, cc.p(0, 0), 50, 1);
+      this.sprite.runAction(actionBy);
       // var jumpUp = new cc.EaseOut.create(cc.Animate.create(animation),1.5);
       // this.sprite.runAction(jumpUp);
       // var jumpDown = new cc.MoveBy(1,cc.p(25,-50));
