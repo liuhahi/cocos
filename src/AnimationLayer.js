@@ -1,12 +1,13 @@
 var INITIALIZED = false;
-var HelloWorldLayer = cc.Layer.extend({
+var AnimationLayer = cc.Layer.extend({
+    spriteSheet:null,
+    runningAction:null,
     sprite:null,
-    count:0,
-    loadingBar:null,
     ctor:function () {
         //////////////////////////////
         // 1. super init first
         this._super();
+        this.init();
 
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -16,11 +17,11 @@ var HelloWorldLayer = cc.Layer.extend({
         //height -
         //width -
         // add a "close" icon to exit the progress. it's an autorelease object
-        var sprite = new cc.Sprite.create(res.RedHair_png,cc.rect(467, 79, 65, 78));
-        sprite.setAnchorPoint(cc.p(0.5,0.5));
-        sprite.setPosition(cc.p(size.width/2-100,size.height/2));
-
-        this.addChild(sprite,0);
+        // var sprite = new cc.Sprite.create(res.RedHair_png,cc.rect(467, 79, 65, 78));
+        // sprite.setAnchorPoint(cc.p(0.5,0.5));
+        // sprite.setPosition(cc.p(size.width/2-100,size.height/2));
+        //
+        // this.addChild(sprite,0);
 
         if(cc.sys.capabilities.hasOwnProperty('keyboard'))
         {
@@ -35,42 +36,20 @@ var HelloWorldLayer = cc.Layer.extend({
               //right
               if(key.toString()==39)
               {
+                // create sprite sheet
+                var target = event.getCurrentTarget();
+                target.sprite.scaleX = -1;
                 var spriteAction = new cc.MoveBy(1,cc.p(50,0));
-                sprite.scaleX = -1;
-                // var walkAnimFrames = [];
-                // //stand
-                // var f1 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(467, 79, 65, 78));
-                // //walk 1
-                // var f2 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78));
-                // //walk 2
-                // var f3 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(337, 79, 65, 78));
-                //
-                // walkAnimFrames.push(f2);
-                // walkAnimFrames.push(f3);
-                //
-                // var animation = new cc.Animation();
-                // animation.addSpriteFrame(new cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78)));
-                // // animate = Animate::create(animation);
-                // sprite.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+                target.walking(spriteAction);
 
-                                //Creates an animation
-
-                //Create an animation with sprite frames
-                var animFrames = [];
-                var frame = new cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78));
-                animFrames.push(frame);
-                var animation2 = cc.Animation.create(animFrames);
-                sprite.runningAction = new cc.RepeatForever(new cc.Animate(animation2));
-                //Create an animation with sprite frames and delay
-
-                sprite.runAction(spriteAction);
               }
               //left
               if(key.toString()==37)
               {
+                var target = event.getCurrentTarget();
+                target.sprite.scaleX = 1;
                 var spriteAction = new cc.MoveBy(1,cc.p(-50,0));
-                sprite.scaleX = 1;
-                sprite.runAction(spriteAction);
+                target.walking(spriteAction);
               }
               //top
               if(key.toString()==38)
@@ -84,11 +63,19 @@ var HelloWorldLayer = cc.Layer.extend({
                 // var spriteAction = new cc.MoveBy(1,cc.p(0,-50));
                 // sprite.runAction(spriteAction);
               }
+              if(key.toString()==32)
+              {
+                var target = event.getCurrentTarget();
+
+                target.jump();
+              }
 
             },
             onKeyReleased:function(key, event)
             {
-              sprite.setTextureRect(cc.rect(467, 79, 65, 78));
+              // this.sprite.setTextureRect(cc.rect(467, 79, 65, 78));
+              var target = event.getCurrentTarget();
+              target.stop();
               cc.log("Key Released: "+ key.toString());
             }
           },this);
@@ -323,9 +310,81 @@ var HelloWorldLayer = cc.Layer.extend({
 
         return true;
     },
-    walkRight:function()
+    init:function ()
     {
+      this._super();
+      var size = cc.winSize;
 
+
+      this.sprite = cc.Sprite.create(res.stand1_png);
+      this.sprite.setPosition(cc.p(size.width/2, 102));
+
+      this.addChild(this.sprite);
+    }
+    ,
+    walking:function(w_action)
+    {
+      cc.spriteFrameCache.addSpriteFrames(res.redFrame_plist);
+
+
+      // init runningAction
+      var animFrames = [];
+      for (var i = 1; i < 3; i++) {
+          var str = "p_walk" + i + ".png";
+          var frame = cc.spriteFrameCache.getSpriteFrame(str);
+          animFrames.push(frame);
+      }
+      var animation = cc.Animation.create(animFrames, 0.1);
+
+      // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
+      this.sprite.runAction(w_action);
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),1);
+      this.sprite.runAction(runningAction);
+    },
+    jump:function()
+    {
+      cc.spriteFrameCache.addSpriteFrames(res.redFrame_plist);
+
+
+      // init runningAction
+      var animFrames = [];
+      for (var i = 1; i > 0; i--) {
+          var str = "p_walk" + i + ".png";
+          var frame = cc.spriteFrameCache.getSpriteFrame(str);
+          animFrames.push(frame);
+      }
+      var animation = cc.Animation.create(animFrames, 0.5);
+
+      var jumpUpAction = new cc.MoveBy(1,cc.p(0,50));
+      jumpUpAction.easing(cc.easeExponentialOut(50));
+      this.sprite.runAction(jumpUpAction);
+      var jumpDownAction = new cc.MoveBy(1,cc.p(0,-50));
+      jumpDownAction.easing(cc.easeExponentialIn(50));
+      this.sprite.runAction(jumpDownAction);
+      // var jumpUp = new cc.EaseOut.create(cc.Animate.create(animation),1.5);
+      // this.sprite.runAction(jumpUp);
+      // var jumpDown = new cc.MoveBy(1,cc.p(25,-50));
+      // this.sprite.runAction(jumpDown);
+
+    }
+    ,
+    stop:function()
+    {
+      cc.spriteFrameCache.addSpriteFrames(res.redFrame_plist);
+
+
+      // init runningAction
+      var animFrames = [];
+      for (var i = 1; i > 0; i--) {
+          var str = "stand" + i + ".png";
+          var frame = cc.spriteFrameCache.getSpriteFrame(str);
+          animFrames.push(frame);
+      }
+      var animation = cc.Animation.create(animFrames, 0.5);
+
+      // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),5);
+      this.sprite.runAction(runningAction);
     }
     ,
     remove:function()
@@ -414,16 +473,16 @@ var play = function()
   // cc.director.runScene(new cc.TransitionZoomFlipY(3,scene));
   cc.director.runScene(new cc.TransitionFade(3,scene));
 }
-var HelloWorldScene = cc.Scene.extend({
-    onEnter:function () {
-        this._super();
-
-        if(INITIALIZED == false)
-        {
-          INITIALIZED = true;
-
-          var layer = new HelloWorldLayer();
-          this.addChild(layer);
-        }
-    }
-});
+// var HelloWorldScene = cc.Scene.extend({
+//     onEnter:function () {
+//         this._super();
+//
+//         if(INITIALIZED == false)
+//         {
+//           INITIALIZED = true;
+//
+//           var layer = new HelloWorldLayer();
+//           this.addChild(layer);
+//         }
+//     }
+// });

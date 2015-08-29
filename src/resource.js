@@ -17,7 +17,11 @@ var res = {
     SliderProgress_png: "res/sliderProgress.png",
     SliderThumb_png: "res/sliderThumb.png",
     SliderTrack_png: "res/sliderTrack.png",
-    RedHair_png: "res/redhair.png"
+    RedHair_png: "res/redhair.png",
+    redFrame_plist: "res/p_plist.plist",
+    redFrame_png :"res/p_plist.png",
+    stand1_png : "res/stand1.png",
+    bg1: "res/maplestory_background1.png"
 };
 
 var g_resources = [];
