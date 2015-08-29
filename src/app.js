@@ -13,12 +13,88 @@ var HelloWorldLayer = cc.Layer.extend({
         //    you may modify it.
         // ask the window size
         var size = cc.winSize;
-
+        //height -
+        //width -
         // add a "close" icon to exit the progress. it's an autorelease object
-      // var sprite = new cc.Sprite.create(res.CloseNormal_png);
-      // sprite.setAnchorPoint(cc.p(0.5,0.5));
-      // sprite.setPosition(cc.p(size.width/2-100,size.height/2));
-      // this.addChild(sprite,0);
+        var sprite = new cc.Sprite.create(res.RedHair_png,cc.rect(467, 79, 65, 78));
+        sprite.setAnchorPoint(cc.p(0.5,0.5));
+        sprite.setPosition(cc.p(size.width/2-100,size.height/2));
+
+        this.addChild(sprite,0);
+
+        if(cc.sys.capabilities.hasOwnProperty('keyboard'))
+        {
+
+          cc.eventManager.addListener({
+            event:cc.EventListener.KEYBOARD,
+
+            onKeyPressed: function(key, event)
+            {
+              cc.log("event is :"+event.toString());
+              cc.log("Key Pressed: "+ key.toString());
+              //right
+              if(key.toString()==39)
+              {
+                var spriteAction = new cc.MoveBy(1,cc.p(50,0));
+                sprite.scaleX = -1;
+                // var walkAnimFrames = [];
+                // //stand
+                // var f1 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(467, 79, 65, 78));
+                // //walk 1
+                // var f2 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78));
+                // //walk 2
+                // var f3 = cc.SpriteFrame.create(res.RedHair_png,cc.rect(337, 79, 65, 78));
+                //
+                // walkAnimFrames.push(f2);
+                // walkAnimFrames.push(f3);
+                //
+                // var animation = new cc.Animation();
+                // animation.addSpriteFrame(new cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78)));
+                // // animate = Animate::create(animation);
+                // sprite.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+
+                                //Creates an animation
+
+                //Create an animation with sprite frames
+                var animFrames = [];
+                var frame = new cc.SpriteFrame.create(res.RedHair_png,cc.rect(403, 79, 65, 78));
+                animFrames.push(frame);
+                var animation2 = cc.Animation.create(animFrames);
+                sprite.runningAction = new cc.RepeatForever(new cc.Animate(animation2));
+                //Create an animation with sprite frames and delay
+
+                sprite.runAction(spriteAction);
+              }
+              //left
+              if(key.toString()==37)
+              {
+                var spriteAction = new cc.MoveBy(1,cc.p(-50,0));
+                sprite.scaleX = 1;
+                sprite.runAction(spriteAction);
+              }
+              //top
+              if(key.toString()==38)
+              {
+                // var spriteAction = new cc.MoveBy(1,cc.p(0,50));
+                // sprite.runAction(spriteAction);
+              }
+              //down
+              if(key.toString()==40)
+              {
+                // var spriteAction = new cc.MoveBy(1,cc.p(0,-50));
+                // sprite.runAction(spriteAction);
+              }
+
+            },
+            onKeyReleased:function(key, event)
+            {
+              sprite.setTextureRect(cc.rect(467, 79, 65, 78));
+              cc.log("Key Released: "+ key.toString());
+            }
+          },this);
+        }
+
+        // this.scheduleOnce(this.remove, 2);
 
         // var menuItem1 = new cc.MenuItemFont("Push",play);
         // var menu = new cc.Menu(menuItem1);
@@ -191,31 +267,85 @@ var HelloWorldLayer = cc.Layer.extend({
         //
         // this.addChild(textField);
 
-        var layout = new ccui.Layout();
-        layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
-        layout.sizeType = ccui.Widget.SIZE_PERCENT;
-        layout.setSizePercent(cc.p(0.5,0.5));
-        layout.setPositionPercent(cc.p(0.25,0.25));
-        layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
-        layout.setBackGroundColor(cc.color.GRAY);
+        // var layout = new ccui.Layout();
+        // layout.setLayoutType(ccui.Layout.LINEAR_HORIZONTAL);
+        // layout.sizeType = ccui.Widget.SIZE_PERCENT;
+        // layout.setSizePercent(cc.p(0.5,0.5));
+        // layout.setPositionPercent(cc.p(0.25,0.25));
+        // layout.setBackGroundColorType(ccui.Layout.BG_COLOR_SOLID);
+        // layout.setBackGroundColor(cc.color.GRAY);
+        //
+        // var text = new ccui.Text();
+        // text.attr({
+        //   textAlign: cc.TEXT_ALIGNMENT_CENTER,
+        //   string: "Label TTF",
+        //   font: "Arial"
+        // })
+        //
+        // var button = new ccui.Button();
+        // button.loadTextures(res.CloseNormal_png,res.CloseSelected_png);
+        //
+        // layout.addChild(text);
+        // layout.addChild(button);
+        //
+        // this.addChild(layout);
 
-        var text = new ccui.Text();
-        text.attr({
-          textAlign: cc.TEXT_ALIGNMENT_CENTER,
-          string: "Label TTF",
-          font: "Arial"
-        })
-
-        var button = new ccui.Button();
-        button.loadTextures(res.CloseNormal_png,res.CloseSelected_png);
-
-        layout.addChild(text);
-        layout.addChild(button);
-
-        this.addChild(layout);
+        // var pageView = new ccui.PageView();
+        // pageView.setTouchEnabled(true);
+        // pageView.setContentSize(cc.size(240,900));
+        // pageView.setAnchorPoint(cc.p(0.5,0.5));
+        // pageView.x = size.width/2;
+        // pageView.y = size.height/2;
+        //
+        // for(var i=0; i<5 ;i++)
+        // {
+        //   var layout = new ccui.Layout();
+        //
+        //   var imageView = new ccui.ImageView();
+        //   imageView.loadTexture(res.CloseNormal_png);
+        //   imageView.x = pageView.width/2;
+        //   imageView.y = pageView.height/2;
+        //   layout.addChild(imageView);
+        //
+        //   var text = new ccui.Text();
+        //   text.string = "Page" + (i+1);
+        //   text.font = "30px 'Marker Felt'";
+        //   text.color = cc.color(192,192,192);
+        //   text.x = pageView.width/2;
+        //   text.y = pageView.height/2 + 100;
+        //   layout.addChild(text);
+        //
+        //   pageView.addPage(layout);
+        // }
+        //
+        // pageView.addEventListener(this.pageViewEvent,this);
+        // this.addChild(pageView);
 
         return true;
     },
+    walkRight:function()
+    {
+
+    }
+    ,
+    remove:function()
+    {
+      //this.removeAllChildren(true);
+      //this.removeChildByTag(1,ture);
+    }
+    ,
+    pageViewEvent:function(sender,type)
+    {
+      switch (type) {
+        case ccui.PageView.EVENT_TURNING:
+          cc.log("Page: " + sender.getCurPageIndex());
+
+          break;
+        default:
+
+      }
+    }
+    ,
     sliderEvent:function(sender,type)
     {
       switch (type) {

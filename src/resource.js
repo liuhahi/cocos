@@ -17,6 +17,7 @@ var res = {
     SliderProgress_png: "res/sliderProgress.png",
     SliderThumb_png: "res/sliderThumb.png",
     SliderTrack_png: "res/sliderTrack.png",
+    RedHair_png: "res/redhair.png"
 };
 
 var g_resources = [];
