@@ -4,6 +4,19 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>leanOver.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,307},{64,47}}</string>
+                <key>offset</key>
+                <string>{-1,-16}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,33},{64,47}}</string>
+                <key>sourceSize</key>
+                <string>{66,81}</string>
+            </dict>
             <key>p_walk1.png</key>
             <dict>
                 <key>frame</key>
@@ -64,9 +77,9 @@
             <key>realTextureFileName</key>
             <string>p_plist.png</string>
             <key>size</key>
-            <string>{62,307}</string>
+            <string>{62,373}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5465f950eaedd604ace9781dc571b95d:ef9c7156431428f38a2f9e1e9df4da14:80cb194ef5327162e231871eccea6be9$</string>
+            <string>$TexturePacker:SmartUpdate:71ca55fa5b4fee7e8f4c040bc5b4cba7:9cae9317ff99ba13c35e550315228645:80cb194ef5327162e231871eccea6be9$</string>
             <key>textureFileName</key>
             <string>p_plist.png</string>
         </dict>

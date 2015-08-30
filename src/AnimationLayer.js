@@ -60,8 +60,8 @@ var AnimationLayer = cc.Layer.extend({
               //down
               if(key.toString()==40)
               {
-                // var spriteAction = new cc.MoveBy(1,cc.p(0,-50));
-                // sprite.runAction(spriteAction);
+                var target = event.getCurrentTarget();
+                target.leanOver();
               }
               if(key.toString()==32)
               {
@@ -334,12 +334,13 @@ var AnimationLayer = cc.Layer.extend({
           var frame = cc.spriteFrameCache.getSpriteFrame(str);
           animFrames.push(frame);
       }
-      var animation = cc.Animation.create(animFrames, 0.5);
+      var animation = cc.Animation.create(animFrames, 0.2);
 
       // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
       this.sprite.runAction(w_action);
       var runningAction = new cc.Repeat(cc.Animate.create(animation),0.5);
       this.sprite.runAction(runningAction);
+      this.stop();
     },
     jump:function()
     {
@@ -351,7 +352,7 @@ var AnimationLayer = cc.Layer.extend({
 
       animFrames.push(cc.spriteFrameCache.getSpriteFrame("p_walk2.png"));
 
-      var animation = cc.Animation.create(animFrames, 0.5);
+      var animation = cc.Animation.create(animFrames, 1);
       var runningAction = new cc.Repeat(cc.Animate.create(animation),1);
       this.sprite.runAction(runningAction);
       // var jumpUpAction = new cc.MoveBy(1,cc.p(0,50));
@@ -367,6 +368,17 @@ var AnimationLayer = cc.Layer.extend({
       // var jumpDown = new cc.MoveBy(1,cc.p(25,-50));
       // this.sprite.runAction(jumpDown);
 
+    },
+    leanOver:function()
+    {
+      // init runningAction
+      var animFrames = [];
+      animFrames.push(cc.spriteFrameCache.getSpriteFrame("leanOver.png"));
+      var animation = cc.Animation.create(animFrames, 0.1);
+
+      // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),1);
+      this.sprite.runAction(runningAction);
     }
     ,
     stop:function()
@@ -381,10 +393,10 @@ var AnimationLayer = cc.Layer.extend({
           var frame = cc.spriteFrameCache.getSpriteFrame(str);
           animFrames.push(frame);
       }
-      var animation = cc.Animation.create(animFrames, 0.5);
+      var animation = cc.Animation.create(animFrames, 1);
 
       // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
-      var runningAction = new cc.Repeat(cc.Animate.create(animation),5);
+      var runningAction = new cc.Repeat(cc.Animate.create(animation),2);
       this.sprite.runAction(runningAction);
     }
     ,
