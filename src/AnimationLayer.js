@@ -318,6 +318,7 @@ var AnimationLayer = cc.Layer.extend({
 
       this.sprite = cc.Sprite.create(res.stand1_png);
       this.sprite.setPosition(cc.p(size.width/2, 102));
+      this.sprite.setTag("me");
 
       this.addChild(this.sprite);
     }
@@ -398,6 +399,8 @@ var AnimationLayer = cc.Layer.extend({
       // var spriteAction = new cc.MoveBy(1,cc.p(50,0));
       var runningAction = new cc.Repeat(cc.Animate.create(animation),2);
       this.sprite.runAction(runningAction);
+      //boundingBox starts from left-bottom corner.
+      cc.log("Tag is : "+this.sprite.getTag()+" and boundingBox: width:"+this.sprite.getBoundingBox().width+" height:"+this.sprite.getBoundingBox().height+" x:"+this.sprite.getBoundingBox().x+" y:"+this.sprite.getBoundingBox().y+" window_width:"+cc.winSize.width+" window_height:"+cc.winSize.height);
     }
     ,
     remove:function()
